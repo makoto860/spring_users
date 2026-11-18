@@ -24,7 +24,7 @@ public class DataSourceConfig {
                 + "&serverTimezone=Asia/Tokyo"
                 + "&characterEncoding=UTF-8");
 
-        dataSource.setUsername("makoto");
+        dataSource.setUsername("root");
         // 自分のMySQLのパスワードに変更してください
         dataSource.setPassword("root1234");
         return dataSource;

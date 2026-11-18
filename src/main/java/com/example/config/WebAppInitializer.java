@@ -4,7 +4,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 // Tomcat起動時にSpring MVCのDispatcherServletを登録する役割を持つ
 public class WebAppInitializer
         extends AbstractAnnotationConfigDispatcherServletInitializer {
-
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return null;
