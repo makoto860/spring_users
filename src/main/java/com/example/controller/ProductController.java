@@ -48,12 +48,12 @@ public class ProductController {
                 redirectAttributes.addFlashAttribute(
                     "message", "商品を登録しました！");
             }
-            return "redirect:/products";
+            return "index";
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute(
                 "error", "商品登録に失敗しました：" + e.getMessage());
-            return "redirect:/products/new";
+            return "new";
         }
     }
 }

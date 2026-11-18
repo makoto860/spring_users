@@ -12,13 +12,15 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan(basePackages = "com.example")
 public class WebMvcConfig implements WebMvcConfigurer {
 	@Bean
-    public InternalResourceViewResolver viewResolver() {
-        InternalResourceViewResolver resolver =
-                new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/views/");
-        resolver.setSuffix(".jsp");
-        return resolver;
-    }
+	public InternalResourceViewResolver viewResolver() {
+	    InternalResourceViewResolver resolver =
+	            new InternalResourceViewResolver();
+
+	    resolver.setPrefix("/products/");
+	    resolver.setSuffix(".jsp");
+
+	    return resolver;
+	}
 }
 
 //@ConfigurationはSpringの設定クラスとして登録
