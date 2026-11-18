@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>商品マスタ管理</h1>
+	<p>webapp/products/index.jsp</p>
 </body>
 </html>

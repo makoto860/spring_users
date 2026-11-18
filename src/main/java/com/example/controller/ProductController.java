@@ -3,36 +3,57 @@ package com.example.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.example.model.Product;
+import com.example.repository.ProductRepository;
 
 @Controller
 public class ProductController {
-	private final JdbcTemplate jdbcTemplate;
-	public ProductController(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private final ProductRepository productRepository;
+	// ProductRepositoryを受け取る
+	public ProductController(ProductRepository productRepository) {
+	    this.productRepository = productRepository;
+	}
 
     @GetMapping("/products")
     public String index() {
         return "products/index";
     }
-    
+
+ // DB接続テスト
     @GetMapping("/products/db-test")
     @ResponseBody
     public String dbTest() {
-    	try {
-            String databaseName = jdbcTemplate.queryForObject(
-                "SELECT DATABASE()",
-                String.class
-            );
-            return "MySQL CONNECTION SUCCESS! Database: "
-                    + databaseName;
+        return "Controller is working!";
+    }
+
+    // 新規登録画面
+    @GetMapping("/products/new")
+    public String newProduct(Model model) {
+        model.addAttribute("product", new Product());
+        return "products/new";
+    }
+
+    // 商品登録処理
+    @PostMapping("/products")
+    public String create(@ModelAttribute Product product,
+                         RedirectAttributes redirectAttributes) {
+        try {
+            int result = productRepository.insert(product);
+            if (result == 1) {
+                redirectAttributes.addFlashAttribute(
+                    "message", "商品を登録しました！");
+            }
+            return "redirect:/products";
         } catch (Exception e) {
             e.printStackTrace();
-            return "MySQL CONNECTION ERROR: "
-                    + e.getClass().getSimpleName()
-                    + " : "
-                    + e.getMessage();
+            redirectAttributes.addFlashAttribute(
+                "error", "商品登録に失敗しました：" + e.getMessage());
+            return "redirect:/products/new";
         }
     }
 }
