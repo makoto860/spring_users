@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import java.util.List;
 import com.example.model.Product;
 import com.example.repository.ProductRepository;
 
@@ -19,10 +19,16 @@ public class ProductController {
 	    this.productRepository = productRepository;
 	}
 
-    @GetMapping("/products")
-    public String index(Model model) {
-        return "index";
-    }
+	//一覧に表示する
+	@GetMapping("/products")
+	public String index(Model model) {
+
+	    List<Product> products = productRepository.findAll();
+
+	    model.addAttribute("products", products);
+
+	    return "index";
+	}
 
     // DB接続テスト
     @GetMapping("/products/db-test")

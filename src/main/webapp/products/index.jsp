@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -13,19 +14,23 @@
 	        <th>商品ID</th>
 	        <th>商品名</th>
 	        <th>価格</th>
-			<th>開始日時</th>
+	        <th>開始日時</th>
 	        <th>在庫数</th>
-			<th>説明</th>
-		</tr>
-		<c:forEach var="product" items="${products}">
-		    <tr>
-		        <td><c:out value="${product.id}"/></td>
-		        <td><c:out value="${product.productName}"/></td>
-		        <td><c:out value="${product.price}"/></td>
-		        <td><c:out value="${product.startdate}"/></td>
-		        <td><c:out value="${product.stock}"/></td>
-		    </tr>
-		</c:forEach>
+	    </tr>
+	    <c:forEach var="product" items="${products}">
+	        <tr>
+	            <td><c:out value="${product.id}"/></td>
+	            <td><c:out value="${product.productName}"/></td>
+	            <td><c:out value="${product.price}"/></td>
+	            <td><c:out value="${product.startdate}"/></td>
+	            <td><c:out value="${product.stock}"/></td>
+	        </tr>
+	    </c:forEach>
 	</table>
+	<p>
+	    <a href="${pageContext.request.contextPath}/products/new">
+	        商品新規登録
+	    </a>
+	</p>
 </body>
 </html>
