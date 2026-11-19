@@ -20,11 +20,11 @@ public class ProductController {
 	}
 
     @GetMapping("/products")
-    public String index() {
-        return "products/index";
+    public String index(Model model) {
+        return "index";
     }
 
- // DB接続テスト
+    // DB接続テスト
     @GetMapping("/products/db-test")
     @ResponseBody
     public String dbTest() {
@@ -35,7 +35,7 @@ public class ProductController {
     @GetMapping("/products/new")
     public String newProduct(Model model) {
         model.addAttribute("product", new Product());
-        return "products/new";
+        return "new";
     }
 
     // 商品登録処理
@@ -44,16 +44,27 @@ public class ProductController {
                          RedirectAttributes redirectAttributes) {
         try {
             int result = productRepository.insert(product);
+
             if (result == 1) {
                 redirectAttributes.addFlashAttribute(
                     "message", "商品を登録しました！");
+
+                // 登録成功後は商品一覧へ
+                return "redirect:/products";
             }
-            return "index";
+
+            redirectAttributes.addFlashAttribute(
+                "error", "商品を登録できませんでした。");
+
+            return "redirect:/products/new";
+
         } catch (Exception e) {
             e.printStackTrace();
+
             redirectAttributes.addFlashAttribute(
                 "error", "商品登録に失敗しました：" + e.getMessage());
-            return "new";
+
+            return "redirect:/products/new";
         }
     }
 }
